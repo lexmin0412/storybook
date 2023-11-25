@@ -9,7 +9,7 @@ export default function Layout(props: LayoutProps) {
 
   return (
     <div className="flex flex-col h-screen">
-      <div className="flex-1">{children}</div>
+      <div className="flex-1 overflow-hidden">{children}</div>
 
       <Footer
         content={
