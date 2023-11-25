@@ -1,4 +1,5 @@
 import Add from "@/pages/add";
+import Detail from "@/pages/detail";
 import Home from "@/pages/home";
 
 export interface RouteItem {
@@ -16,6 +17,11 @@ const routeList: RouteItem[] = [
   {
     path: "/add",
     component: Add,
+    children: [],
+  },
+  {
+    path: "/detail/:id",
+    component: Detail,
     children: [],
   },
 ];

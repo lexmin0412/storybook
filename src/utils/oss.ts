@@ -1,3 +1,4 @@
+import { DataItem } from "@/types";
 import OSS from "ali-oss";
 
 export interface OssClientInitProps {
@@ -41,11 +42,55 @@ class OssClient {
 			newItem
 		]
 		console.log('hahaha', newEvents)
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore
 		return this.store.put(`/apis/storybook/data.json`, new OSS.Buffer(JSON.stringify({
 			events: newEvents
 		}, null, 2)))
+	}
+
+	async update(id: string, newValues: Omit<DataItem, 'id'>) {
+		const res = await this.getList()
+		const events = JSON.parse(res.content.toString()).events
+		const newEvents = events.map((item: DataItem) => {
+			if (item.id === id) {
+				return {
+					...item,
+					...newValues
+				}
+			}
+			return item
+		})
+		console.log('hahaha', newEvents)
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore
+		return this.store.put(`/apis/storybook/data.json`, new OSS.Buffer(JSON.stringify({
+			events: newEvents
+		}, null, 2)))
+	}
+
+	async delete(id: string) {
+		const res = await this.getList()
+		const events = JSON.parse(res.content.toString()).events
+
+		const newEvents = events.filter((item: DataItem) => item.id !== id)
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore
+		return this.store.put(`/apis/storybook/data.json`, new OSS.Buffer(JSON.stringify({
+			events: newEvents
+		}, null, 2)))
+	}
+
+	/**
+	 * 查询详情
+	 * @param id 故事id
+	 */
+	async getDetail(id: string) {
+		const res = await this.getList()
+		const events = JSON.parse(res.content.toString()).events
+
+		const detail = events.find((item: DataItem) => item.id === id)
+		return detail
 	}
 }
 

@@ -1,12 +1,15 @@
 import {useNavigate} from "react-router-dom";
-import {List, FloatingBubble, Toast} from "antd-mobile";
+import {List, FloatingBubble, Toast, SwipeAction} from "antd-mobile";
 import {UnorderedListOutline, AddOutline} from "antd-mobile-icons";
 import {useOssClient} from "@/hooks";
 import {OssClientInitProps} from "@/utils";
 import {useRequest} from "ahooks";
 import {useEffect, useState} from "react";
 import OSS from "ali-oss";
-import { DataItem, DataList } from "@/types";
+import {DataItem, DataList} from "@/types";
+import dayjs from "dayjs";
+import {Action} from "antd-mobile/es/components/swipe-action";
+import {tagOptions} from "@/constants";
 
 export default function Home() {
   const handleOssInitModalConfirm = (values: OssClientInitProps) => {
@@ -17,7 +20,7 @@ export default function Home() {
   const navigate = useNavigate();
   const {ossClient, ossInitModalOpen, initOSSClient, setOssInitModalOpen} =
     useOssClient(handleOssInitModalConfirm);
-		const [data, setData] = useState<DataList>([]);
+  const [data, setData] = useState<DataList>([]);
 
   console.log("ossClient", ossClient);
   const {runAsync: fetchList} = useRequest(
@@ -28,11 +31,18 @@ export default function Home() {
       manual: true,
       onSuccess: (res) => {
         console.log("res", JSON.parse(res.content.toString()));
-				setData([
+        const children = JSON.parse(res.content.toString()).events.sort(
+          (prev, cur) => {
+            console.log("prev.date", prev.date, cur.date);
+            return dayjs(prev.date).isBefore(dayjs(cur.date)) ? 1 : -1;
+          }
+        );
+        console.log("children", children);
+        setData([
           {
             id: "11",
-            title: "事件列表",
-            children: JSON.parse(res.content.toString()).events,
+            title: "故事列表",
+            children,
           },
         ]);
       },
@@ -50,6 +60,18 @@ export default function Home() {
     navigate("/add");
   };
 
+  const rightActions: Action[] = [
+    {
+      key: "delete",
+      text: "删除",
+      color: "danger",
+      onClick: async (e) => {
+        console.log("eeee", e);
+        // ossClient?.delete
+      },
+    },
+  ];
+
   return (
     <div>
       {/* 筛选-排序 */}
@@ -60,17 +82,35 @@ export default function Home() {
         return (
           <List header={item.title}>
             {item.children?.map((child) => {
+							const tagLabels = child.tags
+                ?.map((item) => {
+                  return tagOptions.find((ele) => ele.value === item)?.label;
+                })
+                .join(",") || '';
+							const diffDays = dayjs(child.date).diff(dayjs(), 'day')
+							const isAfterToday = dayjs(child.date).isAfter(dayjs())
+							const countdownText =
+                diffDays === 0 ? (
+                  <div className="text-[#00b578]">就是今天啦</div>
+                ) : isAfterToday ? (
+                  <div className="text-blue-500">还有 {diffDays} 天</div>
+                ) : (
+                  `已经过去 ${-diffDays} 天`
+                );
               return (
-                <List.Item
-                  key={child.id}
-                  prefix={<UnorderedListOutline />}
-									description={child.date}
-                  onClick={() => {
-										Toast.show('敬请期待～')
-									}}
-                >
-                  {child.title}
-                </List.Item>
+                <SwipeAction key={child.id} leftActions={rightActions}>
+                  <List.Item
+                    prefix={<UnorderedListOutline />}
+                    description={`${child.date}${tagLabels ? ` | ${tagLabels}` :''}`}
+                    extra={<>{countdownText}</>}
+                    onClick={() => {
+                      // Toast.show("敬请期待～");
+                      navigate(`/detail/${child.id}`);
+                    }}
+                  >
+                    <div>{child.title}</div>
+                  </List.Item>
+                </SwipeAction>
               );
             })}
           </List>

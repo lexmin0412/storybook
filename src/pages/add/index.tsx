@@ -6,12 +6,13 @@ import {
   DatePicker,
   Selector,
   NavBar,
-  Dialog,
+  TextArea,
 } from "antd-mobile";
 import dayjs, { type Dayjs } from "dayjs";
 import type {DatePickerRef} from "antd-mobile/es/components/date-picker";
 import {useOssClient} from "@/hooks";
 import {createFrontendCustomRandomId} from "@/utils/id";
+import { tagOptions } from "@/constants";
 
 export default function Add() {
   const back = () => {
@@ -35,7 +36,7 @@ export default function Add() {
 
   return (
     <div>
-      <NavBar onBack={back}>新增事件</NavBar>
+      <NavBar onBack={back}>记录故事</NavBar>
 
       <Form
         name="form"
@@ -49,6 +50,12 @@ export default function Add() {
         <Form.Item name="title" label="标题" rules={[{required: true}]}>
           <Input placeholder="请输入标题" />
         </Form.Item>
+        <Form.Item name="description" label="描述" rules={[{required: true}]}>
+          <TextArea
+            placeholder="请输入描述"
+            autoSize={{minRows: 3, maxRows: 5}}
+          />
+        </Form.Item>
         <Form.Item
           name="date"
           label="日期"
@@ -56,6 +63,7 @@ export default function Add() {
           onClick={(_e, datePickerRef: RefObject<DatePickerRef>) => {
             datePickerRef.current?.open();
           }}
+          rules={[{required: true}]}
         >
           <DatePicker>
             {(value) =>
@@ -64,14 +72,7 @@ export default function Add() {
           </DatePicker>
         </Form.Item>
         <Form.Item name="tags" label="标签">
-          <Selector
-            columns={3}
-            multiple
-            options={[
-              {label: "旅行", value: "journey"},
-              {label: "纪念日", value: "commemorate"},
-            ]}
-          />
+          <Selector columns={3} multiple options={tagOptions} />
         </Form.Item>
       </Form>
     </div>
