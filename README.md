@@ -1,6 +1,6 @@
 # Storybook
 
-Life storybook.
+记录生活故事。
 
 ## 技术栈
 
