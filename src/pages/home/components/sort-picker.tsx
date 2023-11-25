@@ -112,7 +112,7 @@ interface SortPicker {
 
 }
 
-export default function SortPicker(props: SortPickerProps) {
+export default function SortPicker() {
 	const [visible, setVisible] = useState(false);
   const [value, setValue] = useState<string[]>([]);
   return (
@@ -131,6 +131,8 @@ export default function SortPicker(props: SortPickerProps) {
           setVisible(false);
         }}
         value={value}
+				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+				// @ts-ignore
         onConfirm={setValue}
         onSelect={(val, extend) => {
           console.log("onSelect", val, extend.items);
