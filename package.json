@@ -10,10 +10,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "ahooks": "^3.7.8",
+    "ali-oss": "^6.18.1",
+    "antd-mobile": "^5.33.0",
+    "antd-mobile-icons": "^0.3.0",
+    "dayjs": "^1.11.10",
+    "nanoid": "^5.0.3",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "6.3.0"
   },
   "devDependencies": {
+    "@types/ali-oss": "^6.16.11",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
