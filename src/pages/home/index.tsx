@@ -1,5 +1,5 @@
 import {useNavigate} from "react-router-dom";
-import {List, FloatingBubble, SwipeAction} from "antd-mobile";
+import {List, FloatingBubble} from "antd-mobile";
 import {UnorderedListOutline, AddOutline} from "antd-mobile-icons";
 import {useOssClient} from "@/hooks";
 import {OssClientInitProps} from "@/utils";
@@ -8,7 +8,6 @@ import {useEffect, useState} from "react";
 import OSS from "ali-oss";
 import { DataList} from "@/types";
 import dayjs from "dayjs";
-import {Action} from "antd-mobile/es/components/swipe-action";
 import {tagOptions} from "@/constants";
 import { DataItem } from '@/types'
 
@@ -61,18 +60,6 @@ export default function Home() {
     navigate("/add");
   };
 
-  const rightActions: Action[] = [
-    {
-      key: "delete",
-      text: "删除",
-      color: "danger",
-      onClick: async (e) => {
-        console.log("eeee", e);
-        // ossClient?.delete
-      },
-    },
-  ];
-
   return (
     <div>
       {/* 筛选-排序 */}
@@ -99,19 +86,20 @@ export default function Home() {
                   `已经过去 ${-diffDays} 天`
                 );
               return (
-                <SwipeAction key={child.id} leftActions={rightActions}>
-                  <List.Item
-                    prefix={<UnorderedListOutline />}
-                    description={`${child.date}${tagLabels ? ` | ${tagLabels}` :''}`}
-                    extra={<>{countdownText}</>}
-                    onClick={() => {
-                      // Toast.show("敬请期待～");
-                      navigate(`/detail/${child.id}`);
-                    }}
-                  >
-                    <div>{child.title}</div>
-                  </List.Item>
-                </SwipeAction>
+                <List.Item
+									key={child.id}
+                  prefix={<UnorderedListOutline />}
+                  description={`${child.date}${
+                    tagLabels ? ` | ${tagLabels}` : ""
+                  }`}
+                  extra={<>{countdownText}</>}
+                  onClick={() => {
+                    // Toast.show("敬请期待～");
+                    navigate(`/detail/${child.id}`);
+                  }}
+                >
+                  <div>{child.title}</div>
+                </List.Item>
               );
             })}
           </List>
