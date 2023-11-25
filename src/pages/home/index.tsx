@@ -1,15 +1,16 @@
 import {useNavigate} from "react-router-dom";
-import {List, FloatingBubble, Toast, SwipeAction} from "antd-mobile";
+import {List, FloatingBubble, SwipeAction} from "antd-mobile";
 import {UnorderedListOutline, AddOutline} from "antd-mobile-icons";
 import {useOssClient} from "@/hooks";
 import {OssClientInitProps} from "@/utils";
 import {useRequest} from "ahooks";
 import {useEffect, useState} from "react";
 import OSS from "ali-oss";
-import {DataItem, DataList} from "@/types";
+import { DataList} from "@/types";
 import dayjs from "dayjs";
 import {Action} from "antd-mobile/es/components/swipe-action";
 import {tagOptions} from "@/constants";
+import { DataItem } from '@/types'
 
 export default function Home() {
   const handleOssInitModalConfirm = (values: OssClientInitProps) => {
@@ -18,7 +19,7 @@ export default function Home() {
   };
 
   const navigate = useNavigate();
-  const {ossClient, ossInitModalOpen, initOSSClient, setOssInitModalOpen} =
+  const {ossClient, initOSSClient, setOssInitModalOpen} =
     useOssClient(handleOssInitModalConfirm);
   const [data, setData] = useState<DataList>([]);
 
@@ -31,7 +32,7 @@ export default function Home() {
       manual: true,
       onSuccess: (res) => {
         console.log("res", JSON.parse(res.content.toString()));
-        const children = JSON.parse(res.content.toString()).events.sort(
+        const children = (JSON.parse(res.content.toString()).events as DataItem[]).sort(
           (prev, cur) => {
             console.log("prev.date", prev.date, cur.date);
             return dayjs(prev.date).isBefore(dayjs(cur.date)) ? 1 : -1;
