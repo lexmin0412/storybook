@@ -1,5 +1,4 @@
-import {Footer} from "antd-mobile";
-
+import {LexminFooter} from "@lexmin0412/wc-react";
 interface LayoutProps {
   children: React.ReactNode;
 }
@@ -10,23 +9,7 @@ export default function Layout(props: LayoutProps) {
   return (
     <div className="flex flex-col h-screen">
       <div className="flex-1 overflow-hidden">{children}</div>
-
-      <Footer
-        content={
-          <div className='h-8 leading-8'>
-            Created and Maintained by
-            <a
-              style={{
-                marginLeft: "4px",
-              }}
-              href="https://github.com/lexmin0412"
-              target="_blank"
-            >
-              Lexmin0412
-            </a>
-          </div>
-        }
-      ></Footer>
+			<LexminFooter />
     </div>
   );
 }
