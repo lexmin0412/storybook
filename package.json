@@ -14,7 +14,7 @@
     "pnpm": ">=8.0.0 <9.0.0"
   },
   "dependencies": {
-    "@lexmin0412/wc-react": "^0.0.8",
+    "@lexmin0412/wc-react": "^0.0.9",
     "ahooks": "^3.7.8",
     "ali-oss": "^6.18.1",
     "antd-mobile": "^5.33.0",

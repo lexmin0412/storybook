@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@lexmin0412/wc-react':
-    specifier: ^0.0.8
-    version: 0.0.8
+    specifier: ^0.0.9
+    version: 0.0.9
   ahooks:
     specifier: ^3.7.8
     version: 3.7.8(react@18.2.0)
@@ -1579,14 +1579,14 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
-  /@lexmin0412/wc-react@0.0.8:
-    resolution: {integrity: sha512-T5HP0UrEF2L3N4jkJ1fu+VyjilnKRhiGZmonc5SQQ0/GdaofPXSJlSzBhaxgvX+MTNSWQ1x2C/yIRyFI+fPDHQ==}
+  /@lexmin0412/wc-react@0.0.9:
+    resolution: {integrity: sha512-YljZ7MD9/19jSxt3+F+ctKHpns9rYS7lDJ+aIxT0Rmf8RP197wL3HOMHl99a2XaMS+gDAMz4S0lPUPMTSNIBJw==}
     dependencies:
-      '@lexmin0412/wc': 0.0.8
+      '@lexmin0412/wc': 0.0.9
     dev: false
 
-  /@lexmin0412/wc@0.0.8:
-    resolution: {integrity: sha512-43usrqGSdA8cTkttjc6CzacPU2zmoD1SddE6vWgmCUQvbem6mu+IvUwfJU7O/WOP/XPzhSUlVA4CHw9iTuqGMA==}
+  /@lexmin0412/wc@0.0.9:
+    resolution: {integrity: sha512-fZPVZBAATzwm0wnSszdeprxN1ZlBK1pMzULI7LldtHZAT5aaSJtNKlgm5prYDt/ybKi4s5xuKNsetXCRaAf6rg==}
     dependencies:
       '@stencil/core': 4.8.0
     dev: false
